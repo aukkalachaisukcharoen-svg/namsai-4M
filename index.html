@@ -1,0 +1,823 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy 4th Month Anniversary 💕 For น้ำใส</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Mali & Itim สำหรับภาษาไทยสุดน่ารัก -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Mali:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ตั้งค่าฟอนต์และธีมหลัก */
+        body {
+            font-family: 'Mali', cursive, sans-serif;
+            background: linear-gradient(135deg, #fff0f6 0%, #ffe3ec 35%, #e3f2fd 70%, #fff9db 100%);
+            background-attachment: fixed;
+            color: #5c3a4d;
+            overflow-x: hidden;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .font-itim {
+            font-family: 'Itim', cursive, sans-serif;
+        }
+
+        /* ลายจุด Polka Dot น่ารักๆ แบบคิตตี้ */
+        .polka-bg {
+            background-image: radial-gradient(#ffb3d1 1.5px, transparent 1.5px), radial-gradient(#bde0fe 1.5px, #fff5f8 1.5px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+
+        /* เอฟเฟกต์การ์ดกระจกนุ่มนิ่ม */
+        .kawaii-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(10px);
+            border: 3px solid #ffc2d1;
+            box-shadow: 0 10px 25px -5px rgba(255, 133, 161, 0.25), 0 4px 10px -2px rgba(255, 194, 209, 0.3);
+            border-radius: 28px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .kawaii-card:hover {
+            transform: translateY(-4px);
+        }
+
+        /* อนิเมชันลอยเบาๆ */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(4deg); }
+        }
+        @keyframes floatReverse {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(-4deg); }
+        }
+        @keyframes pulseHeart {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        .animate-float { animation: floatSlow 4s ease-in-out infinite; }
+        .animate-float-rev { animation: floatReverse 4.5s ease-in-out infinite; }
+        .animate-pulse-heart { animation: pulseHeart 1.8s ease-in-out infinite; }
+        .animate-wiggle { animation: wiggle 2.5s ease-in-out infinite; }
+
+        /* ปุ่มสไตล์เยลลี่น่ารัก */
+        .btn-jelly {
+            background: linear-gradient(180deg, #ff7597 0%, #ff477e 100%);
+            box-shadow: 0 6px 0 #d92662, 0 10px 20px rgba(255, 71, 126, 0.35);
+            transition: all 0.15s ease;
+        }
+        .btn-jelly:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #d92662, 0 4px 10px rgba(255, 71, 126, 0.35);
+        }
+
+        .btn-sky {
+            background: linear-gradient(180deg, #72efdd 0%, #48bfe3 100%);
+            box-shadow: 0 5px 0 #2b93b8, 0 8px 15px rgba(72, 191, 227, 0.3);
+            transition: all 0.15s ease;
+        }
+        .btn-sky:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #2b93b8;
+        }
+
+        /* ซองจดหมาย 3D แบบโต้ตอบได้ */
+        .envelope-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 340px;
+            height: 220px;
+            margin: 0 auto;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+        .envelope-back {
+            position: absolute;
+            inset: 0;
+            background: #ff8fab;
+            border-radius: 16px;
+            box-shadow: 0 12px 24px rgba(255, 117, 151, 0.3);
+        }
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 170px solid transparent;
+            border-right: 170px solid transparent;
+            border-top: 120px solid #ff7096;
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out, z-index 0.2s;
+            z-index: 4;
+            border-radius: 16px 16px 0 0;
+        }
+        @media (max-width: 380px) {
+            .envelope-wrapper { max-width: 300px; height: 200px; }
+            .envelope-flap { border-left-width: 150px; border-right-width: 150px; border-top-width: 110px; }
+            .envelope-pocket { border-left-width: 150px !important; border-right-width: 150px !important; border-bottom-width: 110px !important; }
+        }
+        .envelope-wrapper.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+        .envelope-pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 170px solid #ffb3c6;
+            border-right: 170px solid #ffb3c6;
+            border-bottom: 120px solid #ff9ebb;
+            border-radius: 0 0 16px 16px;
+            z-index: 3;
+            pointer-events: none;
+        }
+        .envelope-seal {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .envelope-wrapper.open .envelope-seal {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+            pointer-events: none;
+        }
+
+        /* เอฟเฟกต์หัวใจลอยตอนคลิกหน้าจอ */
+        .click-sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: popUpFade 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            font-size: 22px;
+        }
+        @keyframes popUpFade {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
+            50% { opacity: 1; transform: translate(-50%, -120%) scale(1.2); }
+            100% { opacity: 0; transform: translate(-50%, -180%) scale(0.9); }
+        }
+
+        /* คูปองขอบหยัก */
+        .coupon-ticket {
+            background: linear-gradient(135deg, #ffffff 0%, #fff0f5 100%);
+            border: 2px dashed #ff8fab;
+            position: relative;
+        }
+        .coupon-ticket::before, .coupon-ticket::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: #ffe8f0;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            border: 2px solid #ffc2d1;
+        }
+        .coupon-ticket::before { left: -12px; }
+        .coupon-ticket::after { right: -12px; }
+
+        /* ซ่อน Scrollbar แต่ยังเลื่อนได้ */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #fff0f6; }
+        ::-webkit-scrollbar-thumb { background: #ffb3c6; border-radius: 10px; }
+    </style>
+</head>
+<body class="polka-bg min-h-screen relative selection:bg-pink-200 selection:text-pink-900">
+
+    <!-- องค์ประกอบตกแต่งลอยพื้นหลัง (ก้อนเมฆชินนามอน โบว์คิตตี้ ดาวชินจัง) -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0 opacity-75">
+        <!-- ก้อนเมฆซ้ายบน -->
+        <svg class="w-24 h-16 text-white absolute top-8 left-4 animate-float drop-shadow-sm" viewBox="0 0 100 60" fill="currentColor">
+            <path d="M25,50 C12,50 5,42 5,32 C5,22 13,15 23,15 C26,6 36,2 47,4 C57,5 64,12 66,21 C76,20 85,27 85,36 C85,45 77,50 67,50 Z"/>
+        </svg>
+        <!-- ก้อนเมฆขวาบน -->
+        <svg class="w-28 h-16 text-sky-100 absolute top-20 right-4 animate-float-rev drop-shadow-sm" viewBox="0 0 100 60" fill="currentColor">
+            <path d="M25,50 C12,50 5,42 5,32 C5,22 13,15 23,15 C26,6 36,2 47,4 C57,5 64,12 66,21 C76,20 85,27 85,36 C85,45 77,50 67,50 Z"/>
+        </svg>
+        <!-- ดาวเหลืองแดงสไตล์ชินจัง -->
+        <div class="absolute top-1/4 left-6 text-2xl animate-wiggle">⭐</div>
+        <div class="absolute top-1/3 right-8 text-2xl animate-float">🎀</div>
+        <div class="absolute bottom-1/4 left-8 text-2xl animate-float-rev">☁️</div>
+        <div class="absolute bottom-16 right-6 text-2xl animate-wiggle">🌷</div>
+    </div>
+
+    <!-- ปุ่มควบคุมเสียงกล่องดนตรี (Music Box Toggle) มุมขวาบน -->
+    <button id="musicToggleBtn" onclick="toggleMusic()" class="fixed top-4 right-4 z-50 bg-white/90 backdrop-blur-md border-2 border-pink-300 text-pink-600 px-3.5 py-2 rounded-full shadow-lg flex items-center gap-2 text-sm font-bold hover:scale-105 active:scale-95 transition">
+        <span id="musicIcon" class="text-lg">🎵</span>
+        <span id="musicText">เปิดเพลง</span>
+    </button>
+
+    <!-- ========================================== -->
+    <!-- หน้าจอที่ 1: กล่องของขวัญต้อนรับ (Welcome Screen) -->
+    <!-- ========================================== -->
+    <div id="welcomeScreen" class="fixed inset-0 z-40 flex flex-col items-center justify-center p-5 bg-gradient-to-b from-pink-100/95 via-rose-50/95 to-sky-100/95 backdrop-blur-md transition-all duration-700">
+        <div class="max-w-md w-full bg-white/95 border-4 border-pink-300 rounded-[36px] p-7 text-center shadow-2xl relative overflow-hidden">
+            <!-- แถบตกแต่งด้านบนสไตล์ชินจัง (แดง-เหลือง-ฟ้า) -->
+            <div class="flex justify-center gap-2 mb-4">
+                <span class="w-3.5 h-3.5 rounded-full bg-rose-400"></span>
+                <span class="w-3.5 h-3.5 rounded-full bg-amber-300"></span>
+                <span class="w-3.5 h-3.5 rounded-full bg-sky-300"></span>
+            </div>
+
+            <!-- การ์ตูนมาสคอต SVG น่ารัก (น้องกระต่าย/หูยาวชินนามอนติดโบว์คิตตี้) -->
+            <div class="w-36 h-32 mx-auto mb-3 animate-float relative">
+                <svg viewBox="0 0 200 160" class="w-full h-full drop-shadow-md">
+                    <!-- หูยาวสไตล์ชินนามอนโรล -->
+                    <ellipse cx="42" cy="95" rx="34" ry="16" transform="rotate(-25 42 95)" fill="#ffffff" stroke="#bde0fe" stroke-width="4"/>
+                    <ellipse cx="158" cy="95" rx="34" ry="16" transform="rotate(25 158 95)" fill="#ffffff" stroke="#bde0fe" stroke-width="4"/>
+                    <!-- หัวกลมๆ นุ่มนิ่ม -->
+                    <ellipse cx="100" cy="88" rx="52" ry="44" fill="#ffffff" stroke="#ffc2d1" stroke-width="4"/>
+                    <!-- แก้มชมพู -->
+                    <ellipse cx="68" cy="96" rx="10" ry="6" fill="#ff9ebb" opacity="0.8"/>
+                    <ellipse cx="132" cy="96" rx="10" ry="6" fill="#ff9ebb" opacity="0.8"/>
+                    <!-- ตาฟ้าใส -->
+                    <circle cx="78" cy="82" r="5.5" fill="#48bfe3"/>
+                    <circle cx="76" cy="80" r="2" fill="#ffffff"/>
+                    <circle cx="122" cy="82" r="5.5" fill="#48bfe3"/>
+                    <circle cx="120" cy="80" r="2" fill="#ffffff"/>
+                    <!-- ปากแมว/กระต่ายยิ้ม -->
+                    <path d="M92 94 Q96 100 100 94 Q104 100 108 94" fill="none" stroke="#ff7597" stroke-width="3" stroke-linecap="round"/>
+                    <!-- โบว์แดงคิตตี้ที่หูขวา -->
+                    <g transform="translate(132, 48) rotate(18)">
+                        <path d="M0,0 C-14,-12 -22,6 -6,10 C-22,14 -14,32 0,20 Z" fill="#ff477e" stroke="#d92662" stroke-width="2"/>
+                        <path d="M12,0 C26,-12 34,6 18,10 C34,14 26,32 12,20 Z" fill="#ff477e" stroke="#d92662" stroke-width="2"/>
+                        <circle cx="6" cy="10" r="7" fill="#ff7597" stroke="#d92662" stroke-width="2"/>
+                    </g>
+                    <!-- หัวใจลอย -->
+                    <text x="90" y="34" font-size="22">💕</text>
+                </svg>
+            </div>
+
+            <span class="inline-block bg-pink-100 text-pink-600 text-xs font-bold px-3.5 py-1 rounded-full mb-2 border border-pink-200">
+                ✨ Special Surprise ✨
+            </span>
+            <h1 class="text-2xl sm:text-3xl font-bold text-pink-600 leading-snug mb-2 font-itim">
+                Happy 4th Month<br>Anniversary 💕
+            </h1>
+            <p class="text-lg font-bold text-sky-500 mb-5">
+                For <span class="bg-yellow-100 text-rose-500 px-3 py-0.5 rounded-xl border border-yellow-300">น้ำใส</span> คนน่ารักของเค้า
+            </p>
+
+            <!-- กล่องของขวัญดุ๊กดิ๊ก -->
+            <div class="mb-6">
+                <div onclick="openSurprise()" class="inline-block cursor-pointer animate-wiggle select-none">
+                    <div class="text-6xl filter drop-shadow-md">🎁</div>
+                </div>
+                <p class="text-xs text-pink-400 mt-1">มีของขวัญเล็กๆ น้อยๆ รออยู่ข้างในนะ</p>
+            </div>
+
+            <button onclick="openSurprise()" class="btn-jelly w-full py-3.5 px-6 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-2 cursor-pointer">
+                <span>กดเปิดของขวัญเลยค้าบ</span>
+                <span class="text-xl">🎀</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- หน้าจอหลัก (Main Anniversary Content)       -->
+    <!-- ========================================== -->
+    <main id="mainContent" class="relative z-10 max-w-xl mx-auto px-4 pt-16 pb-20 space-y-8 opacity-0 transition-opacity duration-1000 hidden">
+
+        <!-- ส่วนหัว (Header Banner) -->
+        <header class="text-center space-y-2">
+            <div class="inline-flex items-center gap-2 bg-white/90 px-4 py-1.5 rounded-full border-2 border-pink-200 shadow-sm">
+                <span>🎀</span>
+                <span class="text-xs sm:text-sm font-bold text-pink-500">24 กรกฎาคม 2569 — 24 พฤศจิกายน 2569</span>
+                <span>☁️</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-bold text-pink-600 font-itim drop-shadow-sm">
+                สุขสันต์วันครบรอบ 4 เดือนนะน้ำใส 💕
+            </h1>
+            <p class="text-sm sm:text-base text-rose-400 font-medium">
+                ขอบคุณที่เข้ามาเป็นความสดใสในทุกๆ วันของเค้านะคะ 🌷
+            </p>
+        </header>
+
+        <!-- 1. ตัวนับเวลาความรักแบบ Real-time (Love Counter) -->
+        <section class="kawaii-card p-6 text-center relative overflow-hidden">
+            <!-- สติกเกอร์ตกแต่งมุมการ์ด -->
+            <span class="absolute top-3 left-3 text-xl animate-float">☁️</span>
+            <span class="absolute top-3 right-3 text-xl animate-wiggle">🎀</span>
+
+            <div class="inline-block bg-sky-100 text-sky-600 font-bold text-sm px-4 py-1 rounded-full mb-3 border border-sky-200">
+                ⏰ เราอยู่ด้วยกันมาแล้ว...
+            </div>
+
+            <!-- ตัวเลขแสดงผล Real-time -->
+            <div class="grid grid-cols-4 gap-2 sm:gap-3 my-2">
+                <div class="bg-gradient-to-b from-pink-50 to-pink-100 border-2 border-pink-200 rounded-2xl p-2.5 sm:p-3">
+                    <div id="countDays" class="text-2xl sm:text-3xl font-bold text-pink-600 font-itim">123</div>
+                    <div class="text-xs font-bold text-pink-400 mt-0.5">วัน</div>
+                </div>
+                <div class="bg-gradient-to-b from-sky-50 to-sky-100 border-2 border-sky-200 rounded-2xl p-2.5 sm:p-3">
+                    <div id="countHours" class="text-2xl sm:text-3xl font-bold text-sky-500 font-itim">00</div>
+                    <div class="text-xs font-bold text-sky-400 mt-0.5">ชั่วโมง</div>
+                </div>
+                <div class="bg-gradient-to-b from-amber-50 to-amber-100 border-2 border-amber-200 rounded-2xl p-2.5 sm:p-3">
+                    <div id="countMinutes" class="text-2xl sm:text-3xl font-bold text-amber-500 font-itim">00</div>
+                    <div class="text-xs font-bold text-amber-500 mt-0.5">นาที</div>
+                </div>
+                <div class="bg-gradient-to-b from-rose-50 to-rose-100 border-2 border-rose-200 rounded-2xl p-2.5 sm:p-3">
+                    <div id="countSeconds" class="text-2xl sm:text-3xl font-bold text-rose-500 font-itim">00</div>
+                    <div class="text-xs font-bold text-rose-400 mt-0.5">วินาที</div>
+                </div>
+            </div>
+
+            <div class="mt-3 pt-3 border-t border-dashed border-pink-200 flex items-center justify-center gap-2 text-xs sm:text-sm text-pink-500 font-semibold">
+                <span>ครบ 4 เดือนเต็มบริบูรณ์แล้ว!</span>
+                <span class="animate-pulse-heart">💖</span>
+            </div>
+        </section>
+
+        <!-- 2. การ์ดความทรงจำสุดประทับใจ (Our Sweet Memories) -->
+        <section class="kawaii-card p-6 relative">
+            <!-- สติกเกอร์หัวการ์ด -->
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">🎨</span>
+                    <h2 class="text-lg sm:text-xl font-bold text-pink-600 font-itim">ความทรงจำที่เค้าประทับใจที่สุด</h2>
+                </div>
+                <span class="bg-yellow-100 text-amber-600 text-xs font-bold px-2.5 py-1 rounded-full border border-yellow-300">
+                    My Favorite ⭐
+                </span>
+            </div>
+
+            <!-- กรอบรูปโพลารอยด์จำลองไอเทมสุดน่ารัก (เพ้นท์ลาย + กำไล + ที่คั่นหนังสือ) -->
+            <div class="bg-white p-3.5 rounded-2xl border-2 border-pink-100 shadow-inner mb-4">
+                <div class="bg-gradient-to-r from-pink-100 via-yellow-50 to-sky-100 rounded-xl p-4 flex items-center justify-around text-center mb-3">
+                    <div class="space-y-1">
+                        <div class="text-3xl animate-float">🖌️🎨</div>
+                        <span class="text-[11px] font-bold text-pink-500 block">เพ้นท์ลายครั้งแรก</span>
+                    </div>
+                    <div class="text-pink-300 font-bold">+</div>
+                    <div class="space-y-1">
+                        <div class="text-3xl animate-float-rev">📿✨</div>
+                        <span class="text-[11px] font-bold text-amber-500 block">กำไลข้อมือ</span>
+                    </div>
+                    <div class="text-pink-300 font-bold">+</div>
+                    <div class="space-y-1">
+                        <div class="text-3xl animate-float">🔖🌷</div>
+                        <span class="text-[11px] font-bold text-sky-500 block">ที่คั่นหนังสือ</span>
+                    </div>
+                </div>
+
+                <!-- ข้อความความทรงจำต้นฉบับครบถ้วน -->
+                <p class="text-sm sm:text-base leading-relaxed text-[#5c3a4d] bg-pink-50/60 p-4 rounded-xl border border-pink-100">
+                    "ไอมีเรื่องที่อยากจะบอกยูด้วยยย ยูจำตอนที่ยูเพ้นท์ลายให้ไอครั้งแรกได้มะ ครั้งนั้นไอรู้สึกว่ามันน่ารักมากกกกกกกกกก ไอประทับใจสุดๆ มิหนำซ้ำน้ำใสยังทำกำไลกับที่คั่นหนังสือให้เค้าอีก มันเป็นครั้งแรกเลยที่มีคนทำอะไรแบบนี้ให้เค้า เค้าดีใจและชอบของที่น้ำใสทำให้ที่ซุ๊ดดดดดเลย รักนะคะคนเก่งของเค้า💕"
+                </p>
+            </div>
+
+            <!-- ปุ่มกดส่งหัวใจ/กดถูกใจความทรงจำนี้ -->
+            <div class="flex flex-col items-center">
+                <button onclick="sendMemoryLove(event)" class="btn-sky px-6 py-2.5 rounded-full text-white font-bold text-sm sm:text-base flex items-center gap-2 cursor-pointer">
+                    <span>กดส่งหัวใจให้คนเก่ง</span>
+                    <span class="text-lg">🥰</span>
+                    <span id="loveCountBadge" class="bg-white/30 px-2 py-0.5 rounded-full text-xs">0</span>
+                </button>
+                <p id="memoryToast" class="text-xs text-pink-500 font-bold mt-2 h-4 transition-opacity duration-300 opacity-0">
+                    เย้! น้ำใสเก่งที่สุดเลยยย 💕
+                </p>
+            </div>
+        </section>
+
+        <!-- 3. ซองจดหมายบอกรัก (Love Letter Envelope) -->
+        <section class="kawaii-card p-6 text-center">
+            <h2 class="text-xl sm:text-2xl font-bold text-pink-600 font-itim mb-1">
+                💌 จดหมายจากใจเค้าถึงน้ำใส
+            </h2>
+            <p class="text-xs sm:text-sm text-pink-400 mb-5">
+                (ลองจิ้มที่ซองจดหมายสีชมพูเพื่อเปิดอ่านดูสิคะ 👇)
+            </p>
+
+            <!-- ซองจดหมาย Interactive -->
+            <div id="envelopeBox" onclick="toggleLetter()" class="envelope-wrapper mb-4">
+                <div class="envelope-back"></div>
+                <div class="envelope-flap"></div>
+                <div class="envelope-pocket"></div>
+                <!-- สติกเกอร์หัวใจปิดผนึก -->
+                <div class="envelope-seal bg-white w-14 h-14 rounded-full shadow-md border-2 border-pink-300 flex items-center justify-center animate-pulse-heart">
+                    <span class="text-2xl">💖</span>
+                </div>
+                <div class="absolute bottom-3 left-0 right-0 z-10 text-center pointer-events-none">
+                    <span class="bg-white/80 text-pink-600 text-xs font-bold px-3 py-1 rounded-full">
+                        To: น้ำใสคนน่ารัก 🌷
+                    </span>
+                </div>
+            </div>
+
+            <!-- เนื้อหาจดหมายที่จะเลื่อนเปิดออกมา -->
+            <div id="letterPaper" class="hidden transform transition-all duration-500 origin-top">
+                <div class="bg-[#fffdf9] border-2 border-pink-300 rounded-2xl p-5 sm:p-6 text-left shadow-md relative mt-2" style="background-image: repeating-linear-gradient(transparent, transparent 27px, #ffe3ec 28px);">
+                    <div class="flex justify-between items-center mb-3 pb-2 border-b-2 border-pink-200">
+                        <span class="font-bold text-pink-500 text-sm">ถึง น้ำใส ที่รัก 💕</span>
+                        <span class="text-lg">🎀☁️</span>
+                    </div>
+                    <p class="text-sm sm:text-base leading-[28px] text-[#5c3a4d] font-medium">
+                        เค้าอยากขอบคุณตัวเองที่ส่อหล่อทักไปในวันนั้น แล้วก็ขอบคุณน้ำใสที่ตอบกลับข้อความจากเค้า ทำให้เราได้เริ่มรู้จักกัน วันนี้ก็ครบรอบ 4 เดือนที่เราเป็นแฟนกันแล้ว ในทุกๆ วันที่มีคุณเข้ามามันทำให้ผมรู้สึกว่าการถูกรักจากใครสักคนมันเป็นยังไง มันรู้สึกดีมากๆ คุณเป็นเหมือนดั่งวิมานของผม ผมจะสบายกายและสบายใจทุกครั้งเมื่อได้ใช้เวลาร่วมกันกับคุณ ขอบคุณทุกๆ อย่างทั้งที่ดีและไม่ดีที่ทำให้เราได้มาเจอและรักกันนะครับ สุดท้ายนี้ อยู่กับเค้าไปนานๆ นะคะ🌷💕
+                    </p>
+                    <div class="mt-4 text-right font-bold text-pink-600 text-sm">
+                        รักน้ำใสที่สุดเลยนะคะ 🥰
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. คูปองความรักสำหรับน้ำใส (Interactive Love Coupons) -->
+        <section class="kawaii-card p-6">
+            <div class="text-center mb-4">
+                <span class="inline-block bg-amber-100 text-amber-600 text-xs font-bold px-3 py-1 rounded-full border border-amber-300 mb-1">
+                    🎟️ ของขวัญพิเศษวันครบรอบ
+                </span>
+                <h2 class="text-xl font-bold text-pink-600 font-itim">คูปองตามใจน้ำใส (กดรับสิทธิ์ได้เลย!)</h2>
+            </div>
+
+            <div class="space-y-3">
+                <!-- คูปอง 1 -->
+                <div onclick="redeemCoupon(this, 'คูปองตามใจ 1 วันเต็ม!')" class="coupon-ticket p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-pink-50 transition">
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">👑</span>
+                        <div>
+                            <h3 class="font-bold text-pink-600 text-sm sm:text-base">คูปองตามใจ 1 วัน</h3>
+                            <p class="text-xs text-gray-500">อยากทำอะไร อยากไปไหน เค้าตามใจหมดเลย!</p>
+                        </div>
+                    </div>
+                    <span class="coupon-status bg-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-xl shrink-0">
+                        กดใช้สิทธิ์
+                    </span>
+                </div>
+
+                <!-- คูปอง 2 -->
+                <div onclick="redeemCoupon(this, 'คูปองพาไปกินของอร่อย!')" class="coupon-ticket p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-pink-50 transition">
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">🍰</span>
+                        <div>
+                            <h3 class="font-bold text-sky-600 text-sm sm:text-base">คูปองพาไปกินของอร่อย</h3>
+                            <p class="text-xs text-gray-500">ชาบู หมูกระทะ ขนมหวาน พร้อมเสิร์ฟค้าบ</p>
+                        </div>
+                    </div>
+                    <span class="coupon-status bg-sky-500 text-white text-xs font-bold px-3 py-1.5 rounded-xl shrink-0">
+                        กดใช้สิทธิ์
+                    </span>
+                </div>
+
+                <!-- คูปอง 3 -->
+                <div onclick="redeemCoupon(this, 'คูปองกอดแน่นๆ ไม่จำกัดจำนวนครั้ง!')" class="coupon-ticket p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-pink-50 transition">
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">🫂</span>
+                        <div>
+                            <h3 class="font-bold text-rose-500 text-sm sm:text-base">คูปองกอดแน่นๆ ไม่จำกัด</h3>
+                            <p class="text-xs text-gray-500">ใช้ได้ตลอดชีพ ไม่มีวันหมดอายุ 💕</p>
+                        </div>
+                    </div>
+                    <span class="coupon-status bg-rose-500 text-white text-xs font-bold px-3 py-1.5 rounded-xl shrink-0">
+                        กดใช้สิทธิ์
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. มินิเกมคำถามท้ายเว็บ (Interactive Question with Runaway Button) -->
+        <section class="kawaii-card p-6 sm:p-8 text-center relative overflow-hidden">
+            <div class="text-4xl mb-2 animate-bounce">🌷</div>
+            <h2 class="text-2xl font-bold text-pink-600 font-itim mb-2">
+                อยู่กับเค้าไปนานๆ นะคะน้ำใส 🌷
+            </h2>
+            <p class="text-xs sm:text-sm text-pink-400 mb-6">
+                เลือกคำตอบด้านล่างนี้หน่อยน้าาา~
+            </p>
+
+            <!-- พื้นที่ปุ่มกด -->
+            <div id="buttonArena" class="relative min-h-[110px] flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button onclick="acceptLove()" class="btn-jelly px-7 py-3.5 rounded-2xl text-white font-bold text-base sm:text-lg z-10 cursor-pointer">
+                    ตกลงที่สุดเลย 💕
+                </button>
+
+                <button id="runawayBtn" onmouseover="moveRunawayBtn()" ontouchstart="moveRunawayBtn(event)" onclick="moveRunawayBtn(event)" class="bg-gray-200 text-gray-500 px-5 py-2.5 rounded-2xl font-bold text-sm border-2 border-gray-300 transition-all duration-200 cursor-pointer">
+                    ขอคิดดูก่อน 😜
+                </button>
+            </div>
+
+            <!-- กล่องข้อความแสดงความดีใจเมื่อกดตกลง -->
+            <div id="finalCelebration" class="hidden mt-5 bg-gradient-to-r from-pink-100 via-rose-100 to-amber-100 border-2 border-pink-300 rounded-2xl p-5 animate-pulse-heart">
+                <div class="text-3xl mb-1">🎉🥰💖🎉</div>
+                <p class="text-lg sm:text-xl font-bold text-pink-600 font-itim">
+                    เย้! รักน้ำใสที่สุดในโลกเลยยย 🥰
+                </p>
+                <p class="text-xs text-rose-500 mt-1">
+                    แคปหน้าจอนี้ส่งมาอวดเค้าด้วยนะค้าบ 💕
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-xs text-pink-400 pt-2 pb-6">
+            Made with 💖 exclusively for น้ำใส • Happy 4th Month Anniversary
+        </footer>
+    </main>
+
+    <!-- กล่องแจ้งเตือนน่ารักๆ (Custom Modal แทน alert) -->
+    <div id="customModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+        <div class="bg-white border-4 border-pink-300 rounded-3xl p-6 max-w-xs w-full text-center shadow-2xl transform scale-95 transition-transform" id="modalBox">
+            <div class="text-4xl mb-2">🎟️✨</div>
+            <h3 class="text-lg font-bold text-pink-600 font-itim mb-1">รับสิทธิ์สำเร็จ!</h3>
+            <p id="modalMessage" class="text-sm text-gray-600 mb-4"></p>
+            <p class="text-xs text-pink-400 mb-4">(แคปหน้าจอนี้ส่งมาให้เค้าดูได้เลยน้าา)</p>
+            <button onclick="closeModal()" class="btn-jelly w-full py-2.5 rounded-xl text-white font-bold text-sm cursor-pointer">
+                โอเคค้าบ 💕
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. ระบบเสียงกล่องดนตรี (Web Audio API Music Box)
+        // ==========================================
+        let audioCtx = null;
+        let isPlayingMusic = false;
+        let melodyInterval = null;
+        let noteIndex = 0;
+
+        // โน้ตเพลงทำนองหวานๆ ละมุนๆ (C Major / F Major Pentatonic สไตล์กล่องดนตรี)
+        const melodyNotes = [
+            523.25, 659.25, 783.99, 1046.50, // C5 E5 G5 C6
+            987.77, 783.99, 659.25, 587.33,  // B5 G5 E5 D5
+            698.46, 880.00, 1046.50, 880.00, // F5 A5 C6 A5
+            783.99, 659.25, 587.33, 523.25   // G5 E5 D5 C5
+        ];
+
+        function playMusicBoxNote(freq) {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine'; // เสียงใสๆ เหมือนกล่องดนตรี
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+            // Envelope ให้เสียงนุ่มนวลและค่อยๆ จางลง
+            gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 1.25);
+        }
+
+        function startMusic() {
+            if (isPlayingMusic) return;
+            isPlayingMusic = true;
+            document.getElementById('musicIcon').textContent = '🎶';
+            document.getElementById('musicText').textContent = 'กำลังเล่นเพลง';
+
+            playMusicBoxNote(melodyNotes[noteIndex]);
+            noteIndex = (noteIndex + 1) % melodyNotes.length;
+
+            melodyInterval = setInterval(() => {
+                playMusicBoxNote(melodyNotes[noteIndex]);
+                noteIndex = (noteIndex + 1) % melodyNotes.length;
+            }, 650);
+        }
+
+        function stopMusic() {
+            isPlayingMusic = false;
+            clearInterval(melodyInterval);
+            document.getElementById('musicIcon').textContent = '🎵';
+            document.getElementById('musicText').textContent = 'เปิดเพลง';
+        }
+
+        function toggleMusic() {
+            if (isPlayingMusic) {
+                stopMusic();
+            } else {
+                startMusic();
+            }
+        }
+
+        // ==========================================
+        // 2. เปิดหน้าจอของขวัญ (Welcome Screen -> Main)
+        // ==========================================
+        function openSurprise() {
+            // เล่นเพลงอัตโนมัติเมื่อผู้ใช้กดปุ่มแรก
+            startMusic();
+
+            // ยิง Confetti ฉลอง
+            triggerHeartConfetti();
+
+            const welcome = document.getElementById('welcomeScreen');
+            const main = document.getElementById('mainContent');
+
+            welcome.style.opacity = '0';
+            welcome.style.transform = 'scale(1.08)';
+
+            setTimeout(() => {
+                welcome.classList.add('hidden');
+                main.classList.remove('hidden');
+                setTimeout(() => {
+                    main.style.opacity = '1';
+                }, 50);
+            }, 600);
+        }
+
+        // เอฟเฟกต์พลุกระดาษสีชมพู-ฟ้า-เหลือง
+        function triggerHeartConfetti() {
+            confetti({
+                particleCount: 70,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#ff477e', '#ff8fab', '#72efdd', '#ffd166', '#ffffff']
+            });
+        }
+
+        // ==========================================
+        // 3. ตัวนับเวลาความรักแบบ Real-time
+        // เริ่มคบวันที่ 24 กรกฎาคม 2026 (2569) เวลา 00:00:00
+        // ==========================================
+        const startDate = new Date('2026-07-24T00:00:00');
+
+        function updateLoveTimer() {
+            const now = new Date();
+            let diff = now - startDate;
+
+            // ป้องกันกรณีเวลาเครื่องผู้ใช้ตั้งผิดเป็นอดีต
+            if (diff < 0) diff = 0;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('countDays').textContent = days;
+            document.getElementById('countHours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('countMinutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('countSeconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateLoveTimer, 1000);
+        updateLoveTimer();
+
+        // ==========================================
+        // 4. ปุ่มกดส่งหัวใจให้การ์ดความทรงจำ
+        // ==========================================
+        let loveCount = 0;
+        const sweetMessages = [
+            "เย้! น้ำใสเก่งที่สุดเลยยย 💕",
+            "เค้าชอบของที่น้ำใสทำให้มากๆ เลยนะ 🥰",
+            "น่ารักเกินไปแล้วคนเก่งของเค้า 🎀",
+            "อยากอวดทุกคนเลยว่าแฟนเค้าน่ารัก ✨",
+            "รักน้ำใสที่สุดในโลกเลยค้าบ 💖"
+        ];
+
+        function sendMemoryLove(e) {
+            loveCount++;
+            document.getElementById('loveCountBadge').textContent = loveCount;
+
+            const toast = document.getElementById('memoryToast');
+            toast.textContent = sweetMessages[loveCount % sweetMessages.length];
+            toast.style.opacity = '1';
+
+            // สร้างหัวใจเด้งตรงปุ่มที่กด
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const offsetX = (Math.random() - 0.5) * 80;
+                    const offsetY = (Math.random() - 0.5) * 40;
+                    spawnSparkle(e.clientX + offsetX, e.clientY + offsetY);
+                }, i * 60);
+            }
+        }
+
+        // ==========================================
+        // 5. ซองจดหมายบอกรัก (เปิด-ปิด)
+        // ==========================================
+        let isLetterOpen = false;
+        function toggleLetter() {
+            const envelope = document.getElementById('envelopeBox');
+            const paper = document.getElementById('letterPaper');
+
+            isLetterOpen = !isLetterOpen;
+            if (isLetterOpen) {
+                envelope.classList.add('open');
+                setTimeout(() => {
+                    paper.classList.remove('hidden');
+                    triggerHeartConfetti();
+                }, 300);
+            } else {
+                paper.classList.add('hidden');
+                envelope.classList.remove('open');
+            }
+        }
+
+        // ==========================================
+        // 6. ระบบคูปองความรัก (Custom Modal)
+        // ==========================================
+        function redeemCoupon(cardEl, couponTitle) {
+            const badge = cardEl.querySelector('.coupon-status');
+            badge.textContent = 'รับสิทธิ์แล้ว ✓';
+            badge.classList.remove('bg-pink-500', 'bg-sky-500', 'bg-rose-500');
+            badge.classList.add('bg-emerald-500');
+
+            document.getElementById('modalMessage').textContent = `น้ำใสได้ใช้ "${couponTitle}" เรียบร้อยแล้ว!`;
+            const modal = document.getElementById('customModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            triggerHeartConfetti();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('customModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // ==========================================
+        // 7. มินิเกมปุ่มวิ่งหนี & ปุ่มตกลง
+        // ==========================================
+        const funnyTexts = [
+            "กดไม่ได้หรอก แบร่! 😜",
+            "ปุ่มนี้เสีย กดอีกปุ่มน้า 💕",
+            "ไม่ให้คิด กดตกลงเลยยย 🥺",
+            "หนีแล้ววว ฟิ้ววว ☁️",
+            "ต้องอยู่กับเค้าเท่านั้น! 🌷"
+        ];
+        let dodgeCount = 0;
+
+        function moveRunawayBtn(e) {
+            if (e) e.preventDefault();
+            const btn = document.getElementById('runawayBtn');
+            const arena = document.getElementById('buttonArena');
+
+            const maxX = arena.clientWidth - btn.offsetWidth - 10;
+            const maxY = 70;
+
+            const randomX = Math.max(-maxX / 2, Math.min(maxX / 2, (Math.random() - 0.5) * maxX));
+            const randomY = (Math.random() - 0.5) * maxY;
+
+            btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            btn.textContent = funnyTexts[dodgeCount % funnyTexts.length];
+            dodgeCount++;
+        }
+
+        function acceptLove() {
+            const celebration = document.getElementById('finalCelebration');
+            const runawayBtn = document.getElementById('runawayBtn');
+
+            runawayBtn.style.display = 'none';
+            celebration.classList.remove('hidden');
+
+            // ยิงพลุชุดใหญ่ 3 รอบ
+            triggerHeartConfetti();
+            setTimeout(triggerHeartConfetti, 350);
+            setTimeout(triggerHeartConfetti, 700);
+        }
+
+        // ==========================================
+        // 8. ลูกเล่นคลิกตรงไหนก็มีหัวใจ/โบว์เด้งขึ้นมา
+        // ==========================================
+        const clickEmojis = ['💖', '🎀', '☁️', '✨', '🌷', '💕'];
+        function spawnSparkle(x, y) {
+            const el = document.createElement('div');
+            el.className = 'click-sparkle';
+            el.textContent = clickEmojis[Math.floor(Math.random() * clickEmojis.length)];
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+            document.body.appendChild(el);
+
+            setTimeout(() => {
+                el.remove();
+            }, 900);
+        }
+
+        document.addEventListener('click', (e) => {
+            spawnSparkle(e.clientX, e.clientY);
+        });
+    </script>
+</body>
+</html>
+```
